@@ -2,7 +2,7 @@ library(tidyverse)
 library(tidymodels)
 
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-df_init <- read_delim("OECD_econ_data.csv",delim=",")
+df_init <- read_delim("OECD_econ_data_2.csv",delim=",")
 # data source: OECD
 head(df_init)
 df_init <- filter(df_init, Measure == "Current prices")
@@ -40,6 +40,7 @@ df_train <- training(split)
 df_train
 df_test <- testing(split)
 df_test
+glimpse(df_train)
 
 write_delim(df_train, file = "oecd_tidied_train.csv",delim = ",")
 write_delim(df_test, file = "oecd_tidied_test.csv",delim = ",")
