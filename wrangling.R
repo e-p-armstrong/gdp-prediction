@@ -31,52 +31,15 @@ for (i in iteration_var){
   df_no_2021$next_yr_gdp[i] <- df$`B1_GA Gross domestic product (output approach)`[i+1]
 }
 df_no_2021$next_yr_gdp
-
-next_year_gdp <- df_no_2021$`B1_GA Gross domestic product (output approach)`
-next_year_gdp
-length(df$`B1_GA Gross domestic product (output approach)`)
-length(next_year_gdp)
-for (gdp in next_year_gdp){
-  
-}
-df$`Households and Non-profit institutions serving households`
-mutate(df_no_2021, filter(df, year =) |> pull())
-# Confirmed: making a new variable in R copies the data
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-split <- initial_split(df_for_dectree, prop=0.75, strata = `marital-status`)
+df_no_2021 <- select(df_no_2021,-Year)
+df_no_2021
+split <- initial_split(df_no_2021, 
+                       prop=0.75, 
+                       strata = `B1_GA Gross domestic product (output approach)`)
 df_train <- training(split)
 df_train
 df_test <- testing(split)
 df_test
 
-write_delim(df_train, file = "adult-one-hot-train.csv",delim = ",")
-write_delim(df_test, file = "adult-one-hot-test.csv",delim = ",")
-
-df_for_dectree_2 <- select(df, -age,-workclass,-education,-`educational-num`,-occupation,-relationship,-`capital-gain`,-`capital-loss`,-`hours-per-week`,-`native-country`,-`income`,-`race`,-`gender`)
-colnames(df_for_dectree_2)
-df_for_dectree_2
-
-split <- initial_split(df_for_dectree_2, prop=0.75, strata = `fnlwgt`)
-df_train <- training(split)
-df_train
-df_test <- testing(split)
-df_test
-
-write_delim(df_train, file = "adult-one-hot-train-income.csv",delim = ",")
-write_delim(df_test, file = "adult-one-hot-test-income.csv",delim = ",")
-
+write_delim(df_train, file = "oecd_tidied_train.csv",delim = ",")
+write_delim(df_test, file = "oecd_tidied_test.csv",delim = ",")
