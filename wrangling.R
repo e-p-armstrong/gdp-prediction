@@ -1,5 +1,6 @@
 library(tidyverse)
 library(tidymodels)
+library(dplyr)
 
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 df_init <- read_delim("OECD_econ_data_2.csv",delim=",")
@@ -18,11 +19,11 @@ print(select(df,`Gross domestic product (output approach)`,`Gross value added at
 glimpse(df)
 # Get more years from the original dataset
 # This'll do for now
-
 df <- df |> select_if(~ !any(is.na(.))) # This is the better solution
+df <- df |> select_if(~ !any(is.null(.)))
 df
 df_no_2021 <- filter(df, Year != 2021)
-df_no_2021
+
 
 df_no_2021['next_yr_gdp'] <- 0
 iteration_var <- seq(1,length(df_no_2021$Year),by=1)
@@ -32,7 +33,7 @@ for (i in iteration_var){
 }
 df_no_2021$next_yr_gdp
 df_no_2021 <- select(df_no_2021,-Year)
-df_no_2021
+df_no_2021 <- filter(df_no_2021,if_any(!is.null()))
 split <- initial_split(df_no_2021, 
                        prop=0.75, 
                        strata = `B1_GA Gross domestic product (output approach)`)
